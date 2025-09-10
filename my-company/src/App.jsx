@@ -5,23 +5,21 @@ import Home from './components/Home'
 import About from './components/About'
 import Services from './components/Services'
 import Contact from './components/Contact'
-
-
+import Navbar from './components/Navbar'
 
 function App() {
   
   return (
-    <div>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/home' element={<Home />} />
-          <Route path='/about' element={<About />} />
-          <Route path='/services' element={<Services />} />
-          <Route path='/contact' element={<Contact />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
-  )
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/home" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App
