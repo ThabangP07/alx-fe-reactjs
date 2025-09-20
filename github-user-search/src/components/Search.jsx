@@ -19,14 +19,14 @@ function Search() {
       const data = await fetchUserData(username);
       setUserData(data);
     } catch (err) {
-      setError(`Looks like we can't find the user: ${err.message}`);
+      setError(`Looks like we cant find the user - ${err.message}`);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="p-4 max-w-xl mx-auto">
+    <div>
       <form onSubmit={handleSubmit} >
         <input
           type="text"
