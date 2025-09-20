@@ -1,21 +1,18 @@
 import { useState } from "react";
 import { fetchUserData } from "../services/githubService";
 
-function Search() {
+export default function Search() {
   const [username, setUsername] = useState("");
   const [location, setLocation] = useState("");
-  const [repositories, setRepositories ] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [repositories, setRepositories] = useState("");
   const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // prevent page reload
-    if (
-      username.trim() === "" &&
-      location.trim() === "" &&
-      repositories.trim() === ""
-    ) {
+    e.preventDefault();
+
+    if (!username && !location && !repositories) {
       setError("Please provide at least one search criteria");
       return;
     }
@@ -26,13 +23,13 @@ function Search() {
 
     try {
       const data = await fetchUserData({ username, location, repositories });
-      if (data.length === 0) {
+      if (!data || data.length === 0) {
         setError("No users found with these criteria");
       } else {
         setResults(data);
       }
     } catch (err) {
-      setError(`Looks like we can’t find the user - ${err.message}`);
+      setError(`Looks like we can't find any users - ${err.message}`);
     } finally {
       setLoading(false);
     }
@@ -45,24 +42,27 @@ function Search() {
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          placeholder="Enter GitHub username..."
+          placeholder="GitHub username"
         />
         <input
           type="text"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
-          placeholder="Enter a location"
+          placeholder="Location"
         />
         <input
-          type="text"
+          type="number"
           value={repositories}
           onChange={(e) => setRepositories(e.target.value)}
-          placeholder="Enter number of Repos"
+          placeholder="Minimum public repos"
         />
-        <button type="submit">Search</button>
+        <button
+          type="submit"
+        >
+          Search
+        </button>
       </form>
 
-      {/* Conditional Rendering */}
       <div>
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
@@ -95,5 +95,3 @@ function Search() {
     </div>
   );
 }
-
-export default Search;
