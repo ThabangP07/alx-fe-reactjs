@@ -1,25 +1,30 @@
 import axios from "axios";
 
-const BASE_URL = "https://api.github.com/users";
-
+const BASE_URL = "https://api.github.com/search/users";
 const GITHUB_API_KEY = import.meta.env.VITE_APP_GITHUB_API_KEY;
 
-export async function fetchUserData(username) {
+export async function fetchUserData({ username, location, repositories }) {
   try {
-    const response = await axios.get(`${BASE_URL}/${username}`, {
-      headers: GITHUB_API_KEY
-        ? { Authorization: `Bearer ${GITHUB_API_KEY}` }
-        : {},
-    });
+    let query = "";
 
-    return response.data;
+    if (username) query += `${username} in:login `;
+    if (location) query += `location:${location} `;
+    if (repositories) query += `repos:>=${repositories} `;
+
+    const response = await axios.get(
+      `${BASE_URL}?q=${encodeURIComponent(query.trim())}`,
+      {
+        headers: GITHUB_API_KEY
+          ? { Authorization: `Bearer ${GITHUB_API_KEY}` }
+          : {},
+      }
+    );
+
+    // GitHub returns { items: [...] } for search
+    return response.data.items;
   } catch (error) {
-    // Handle errors
     if (error.response) {
-      // GitHub API returned an error
-      throw new Error(
-        `Error ${error.response.status}: ${error.response.data.message}`
-      );
+      throw new Error(error.response.data.message);
     } else {
       throw new Error("Network error: Could not fetch data");
     }
