@@ -29,7 +29,7 @@ export default function Search() {
         setResults(data);
       }
     } catch (err) {
-      setError(`Looks like we cant find any users - ${err.message}`);
+      setError(`Looks like we cant find the user - ${err.message}`);
     } finally {
       setLoading(false);
     }
