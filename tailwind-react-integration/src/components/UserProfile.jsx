@@ -8,7 +8,7 @@ function UserProfile() {
         src={UserImg}
         alt="User"
       />
-      <h1 className="md:text-xl sm:text-lg text-blue-800 my-4 hover:text-red-500">
+      <h1 className="md:text-xl sm:text-lg text-blue-800 my-4 hover:text-blue-500">
         John Doe
       </h1>
       <p className="text-gray-600 md:text-base sm:text-sm">
