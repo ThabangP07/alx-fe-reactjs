@@ -13,7 +13,7 @@ function HomePage() {
       <h2 className="flex justify-center text-4xl font-bold mb-10">Recipes</h2>
       <ul className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 ">
         {recipes.map((recipe) => (
-          <div className="border-2 rounded-md p-2 hover:bg-red-100" key={recipe.id}>
+          <div className="border-2 rounded-md p-2 hover:bg-red-100 shadow-2xl" key={recipe.id}>
             <li className="w-full">{recipe.image}</li>
             <li className="font-bold text-2xl my-2">{recipe.title}</li>
             <li className="italic">{recipe.summary}</li>
